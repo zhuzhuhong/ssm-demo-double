@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.SmbmsUserMapper">
+    <!--id:指定方法名；resultType:返回值类型，可以是Java中的全限定名，也可以是别名-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from smbms_user;
+    </select>
+</mapper>
