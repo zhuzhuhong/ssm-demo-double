@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--自定义设置项-->
+    <settings>
+        <!--开启驼峰命名法自动映射，默认为false，不开启-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+    </settings>
     <!--配置多环境数据库，default属性：指定下面定义好的数据中的一个-->
     <environments default="development">
         <environment id="development">
@@ -23,7 +29,9 @@
     <!--引入需要被执行的Mapper-->
     <mappers>
         <!--单独配置每一个mapper映射文件-->
-        <mapper resource="com/bdqn/SmbmsUserMapper.xml"/>
+        <!--<mapper resource="com/bdqn/SmbmsUserMapper.xml"/>-->
+        <!--配置Mapper接口-->
+        <mapper class="com.bdqn.SmbmsUserMapper"/>
         <!--指定Mapper映射文件所在的包-->
         <!--<package name="com.bdqn"/>-->
     </mappers>

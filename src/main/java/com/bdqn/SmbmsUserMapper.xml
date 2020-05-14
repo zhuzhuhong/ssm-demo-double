@@ -5,6 +5,44 @@
 <mapper namespace="com.bdqn.SmbmsUserMapper">
     <!--id:指定方法名；resultType:返回值类型，可以是Java中的全限定名，也可以是别名-->
     <select id="selectCount" resultType="java.lang.Integer">
-        select count(*) from smbms_user;
+        select count(*)
+        from smbms_user;
+    </select>
+
+    <select id="selectUserList" resultType="com.bdqn.SmbmsUser">
+        select * <!--id,
+               user_code,
+               user_name,
+               user_password,
+               gender,
+               birthday,
+               phone,
+               address,
+               user_role,
+               created_by,
+               creation_date,
+               modify_by,
+               modify_date-->
+        from smbms_user
+    </select>
+    <!--手动自定义映射结果 type：需要映射的实体类-->
+    <resultMap id="customUser" type="com.bdqn.CustomUser">
+        <!--将数据库中的列，映射到实体类中的字段-->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="user_name" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <!--封装的复杂类型-->
+        <association property="smbmsRole" javaType="com.bdqn.SmbmsRole">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+            <result property="roleCode" column="role_code" jdbcType="VARCHAR"/>
+            <result property="modifyBy" column="modify_by" jdbcType="BIGINT"/>
+            <result property="modifyDate" column="modify_date" jdbcType="DATE"/>
+        </association>
+    </resultMap>
+    <select id="selectCostomeUser" resultMap="customUser">
+        select smbms_user.id, user_name as `name`, (year(now()) - year(birthday)) as age, smbms_role.*
+        from smbms_user
+                 left join smbms_role on smbms_user.user_role = smbms_role.id
     </select>
 </mapper>
