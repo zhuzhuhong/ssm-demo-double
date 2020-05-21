@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--声明开启注解,指定扫描注解的路径-->
+    <context:component-scan base-package="com.bdqn"/>
+
+
+    <!--将被引用的实体类纳入到Spring的管理中-->
+    <!--<bean id="smbmsRole" class="com.bdqn.SmbmsRole">-->
+        <!--&lt;!&ndash;通过构造注入相关属性&ndash;&gt;-->
+        <!--&lt;!&ndash;<constructor-arg name="roleCode" value="Manager"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<constructor-arg name="roleName" value="经理"/>&ndash;&gt;-->
+        <!--<constructor-arg index="0" value="3" />-->
+        <!--<constructor-arg index="1" value="Admin"/>-->
+        <!--<constructor-arg index="2" value="管理"/>-->
+        <!--&lt;!&ndash;通过set注入相关属性&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="roleCode" value="Admin"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="roleName" value="管理员"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<constructor-arg name="creationDate" value="new Date(2020-5-21)"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+<!--将实体类纳入到Spring的管理中-->
+    <!--<bean id="customerUser" class="com.bdqn.CustomUser">-->
+        <!--&lt;!&ndash;注入 所依赖的值 或实体&ndash;&gt;-->
+        <!--<property name="name" value="ETC"/>-->
+        <!--<property name="smbmsRole" ref="smbmsRole"/>-->
+    <!--</bean>-->
+
+</beans>
+    

@@ -1,16 +1,21 @@
 package com.bdqn;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 /**
  * @author mo
  * @Description: 自定义实体类
  * @date 2020-05-14 18:29
  */
-
+@Component
 public class CustomUser {
 
     private Long id;
     private String name;
     private int age;
+
+    @Autowired
     private SmbmsRole smbmsRole;
 
     @Override

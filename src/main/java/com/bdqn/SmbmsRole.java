@@ -1,5 +1,7 @@
 package com.bdqn;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  * @Description:
  * @date 2020-05-14 18:58
  */
-
+@Component
 public class SmbmsRole {
 
     /*  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -25,6 +27,16 @@ public class SmbmsRole {
     private Date creationDate;
     private Long modifyBy;
     private Date modifyDate;
+
+    public SmbmsRole() {
+    }
+
+    public SmbmsRole(Long id,String roleCode, String roleName) {
+        this.id = id;
+        this.roleCode = roleCode;
+        this.roleName = roleName;
+//        this.creationDate = creationDate;
+    }
 
     @Override
     public String toString() {
