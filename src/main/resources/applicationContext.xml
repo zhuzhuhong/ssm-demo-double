@@ -36,5 +36,32 @@
         <!--<property name="smbmsRole" ref="smbmsRole"/>-->
     <!--</bean>-->
 
+    <!--将目标方法，也就是需要被增强的方法纳入到Spring的管理中-->
+    <bean id="userService" class="com.bdqn.service.SmbmsUserService"/>
+
+    <!--先将增强方法所在的类，纳入Spring的管理中-->
+    <bean id="logAspect" class="com.bdqn.aspect.LogAspect"/>
+
+    <!--开始配置切面 -->
+    <aop:config>
+        <!--指定切入点，也就是要增强的位置-->
+        <!--com.bdqn.service.SmbmsUserService; com.bdqn.service.impl.SmbmsRoleServiceImpl-->
+        <aop:pointcut id="pointcut" expression="execution(public * com.bdqn.service..*.*(..))"/>
+        <!--指定增强类型-->
+        <aop:aspect ref="logAspect">
+            <!--前置增强，同时指定前置所调用的方法-->
+            <!--<aop:before method="beforeAdvice" pointcut-ref="pointcut"/>-->
+            <!--&lt;!&ndash;后置返回增强，可以获取到目标方法的返回值 &ndash;&gt;-->
+            <!--<aop:after-returning method="afterAdevice" returning="result" pointcut-ref="pointcut"/>-->
+            <!--异常抛出增强-->
+            <!--<aop:after-throwing method="afterThrowAdevice" throwing="e" pointcut-ref="pointcut" />-->
+            <!--后置增强，也就是最终增强，就是无伦目标方法发生什么，都会最后执行-->
+            <!--<aop:after method="finallyAdevice" pointcut-ref="pointcut" />-->
+            <!--环绕增强，目标方法前后都会执行-->
+            <aop:around method="aroudAdevice" pointcut-ref="pointcut"/>
+
+        </aop:aspect>
+    </aop:config>
+
 </beans>
     

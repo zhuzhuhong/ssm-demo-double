@@ -1,6 +1,8 @@
 package com.bdqn;
 
 import com.bdqn.service.SmbmsUserService;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,6 +14,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 
 public class SmbmsUserServiceTest {
+    private SmbmsUserService smbmsUserService = null;
+
+    @Before
+    public void before() {
+        smbmsUserService = new ClassPathXmlApplicationContext("applicationContext.xml")
+                .getBean(SmbmsUserService.class);
+    }
+
+    @After
+    public void after() {
+        //GC
+        smbmsUserService = null;
+    }
 
     @Test
     public void testCustomUser() {
@@ -31,6 +46,14 @@ public class SmbmsUserServiceTest {
         System.out.println(name);
         System.out.println(user.getSmbmsRole().getId());
         System.out.println("用户角色名："+user.getSmbmsRole().getRoleName());
+    }
+
+    @Test
+    public void testAopBefore() {
+        SmbmsUser smbmsUser = new SmbmsUser();
+        smbmsUser.setUserCode("Admin");
+        smbmsUser.setUserName("管理员");
+
     }
 
 }
