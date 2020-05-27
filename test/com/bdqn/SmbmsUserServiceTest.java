@@ -1,11 +1,16 @@
 package com.bdqn;
 
 import com.bdqn.service.SmbmsUserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.List;
 
 /**
  * @author mo
@@ -15,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SmbmsUserServiceTest {
     private SmbmsUserService smbmsUserService = null;
+    private static final Logger log = LogManager.getLogger(SmbmsUserServiceTest.class);
 
     @Before
     public void before() {
@@ -53,7 +59,12 @@ public class SmbmsUserServiceTest {
         SmbmsUser smbmsUser = new SmbmsUser();
         smbmsUser.setUserCode("Admin");
         smbmsUser.setUserName("管理员");
+    }
 
+    @Test
+    public void testGetUserList() {
+        List<SmbmsUser> userList = smbmsUserService.getUserList();
+        userList.forEach(smbmsUser -> log.info(smbmsUser));
     }
 
 }

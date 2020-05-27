@@ -12,6 +12,7 @@
 
     <!--声明开启注解,指定扫描注解的路径-->
     <context:component-scan base-package="com.bdqn"/>
+    <context:annotation-config/>
 
 
     <!--将被引用的实体类纳入到Spring的管理中-->
@@ -37,10 +38,46 @@
     <!--</bean>-->
 
     <!--将目标方法，也就是需要被增强的方法纳入到Spring的管理中-->
-    <bean id="userService" class="com.bdqn.service.SmbmsUserService"/>
+    <!--<bean id="userService" class="com.bdqn.service.SmbmsUserService"/>-->
 
     <!--先将增强方法所在的类，纳入Spring的管理中-->
     <bean id="logAspect" class="com.bdqn.aspect.LogAspect"/>
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource">
+        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+        <!--数据库连接地址，如果在数据库服务器没有配置编码和时区，则需要在路径后面添加相应的配置-->
+        <property name="url" value="jdbc:mysql://localhost:3306/smbms_db"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!--MyBatis相关属性配置，相当于单独使用MyBatis时的<setting标签>-->
+    <bean id="config" class="org.apache.ibatis.session.Configuration">
+        <!--开启驼峰命名自动映射 ，也就是将数据库中的下划线转换成为Java中的驼峰命名法-->
+        <property name="mapUnderscoreToCamelCase" value="true"/>
+        <!--指定日志的实现，一般用于打印sql语句-->
+        <property name="logImpl" value="org.apache.ibatis.logging.log4j2.Log4j2Impl"/>
+    </bean>
+
+    <!--配置SqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--引入数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--指定mapper映射文件所在的位置-->
+        <property name="mapperLocations" value="classpath:com/bdqn/**/*.xml"/>
+        <!--引入自定义配置-->
+        <property name="configuration" ref="config"/>
+    </bean>
+
+    <!--通过扫描的方式将Mapper纳入Spring的管理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--引入sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--指定dao层接口所在的路径-->
+        <property name="basePackage" value="com.bdqn"/>
+
+    </bean>
 
     <!--开始配置切面 -->
     <aop:config>
@@ -62,6 +99,8 @@
 
         </aop:aspect>
     </aop:config>
+
+
 
 </beans>
     

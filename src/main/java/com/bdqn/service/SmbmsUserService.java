@@ -1,18 +1,29 @@
 package com.bdqn.service;
 
 import com.bdqn.SmbmsUser;
+import com.bdqn.SmbmsUserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author mo
  * @Description: 服务层
  * @date 2020-05-21 18:01
  */
-
+@Service
 public class SmbmsUserService {
     private static final Logger log = LogManager.getLogger(SmbmsUserService.class);
+
+    @Resource
+    private SmbmsUserMapper userMapper;
+
+    public List<SmbmsUser> getUserList() {
+        return userMapper.selectUserList();
+    }
 
     public Integer addUser(SmbmsUser smbmsUser) {
         //
