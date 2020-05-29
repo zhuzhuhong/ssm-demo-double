@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.SmbmsProviderMapper">
+  <resultMap id="BaseResultMap" type="com.bdqn.SmbmsProvider">
+    <!--@mbg.generated-->
+    <!--@Table smbms_provider-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pro_code" jdbcType="VARCHAR" property="proCode" />
+    <result column="pro_nme" jdbcType="VARCHAR" property="proNme" />
+    <result column="pro_desc" jdbcType="VARCHAR" property="proDesc" />
+    <result column="pro_contact" jdbcType="VARCHAR" property="proContact" />
+    <result column="pro_phone" jdbcType="VARCHAR" property="proPhone" />
+    <result column="pro_address" jdbcType="VARCHAR" property="proAddress" />
+    <result column="pro_fax" jdbcType="VARCHAR" property="proFax" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="modify_by" jdbcType="BIGINT" property="modifyBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, pro_code, pro_nme, pro_desc, pro_contact, pro_phone, pro_address, pro_fax, created_by, 
+    creation_date, modify_date, modify_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from smbms_provider
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from smbms_provider
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bdqn.SmbmsProvider" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into smbms_provider (pro_code, pro_nme, pro_desc, 
+      pro_contact, pro_phone, pro_address, 
+      pro_fax, created_by, creation_date, 
+      modify_date, modify_by)
+    values (#{proCode,jdbcType=VARCHAR}, #{proNme,jdbcType=VARCHAR}, #{proDesc,jdbcType=VARCHAR}, 
+      #{proContact,jdbcType=VARCHAR}, #{proPhone,jdbcType=VARCHAR}, #{proAddress,jdbcType=VARCHAR}, 
+      #{proFax,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.bdqn.SmbmsProvider" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into smbms_provider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="proCode != null">
+        pro_code,
+      </if>
+      <if test="proNme != null">
+        pro_nme,
+      </if>
+      <if test="proDesc != null">
+        pro_desc,
+      </if>
+      <if test="proContact != null">
+        pro_contact,
+      </if>
+      <if test="proPhone != null">
+        pro_phone,
+      </if>
+      <if test="proAddress != null">
+        pro_address,
+      </if>
+      <if test="proFax != null">
+        pro_fax,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+      <if test="modifyBy != null">
+        modify_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="proCode != null">
+        #{proCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proNme != null">
+        #{proNme,jdbcType=VARCHAR},
+      </if>
+      <if test="proDesc != null">
+        #{proDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="proContact != null">
+        #{proContact,jdbcType=VARCHAR},
+      </if>
+      <if test="proPhone != null">
+        #{proPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="proAddress != null">
+        #{proAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="proFax != null">
+        #{proFax,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        #{modifyBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.SmbmsProvider">
+    <!--@mbg.generated-->
+    update smbms_provider
+    <set>
+      <if test="proCode != null">
+        pro_code = #{proCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proNme != null">
+        pro_nme = #{proNme,jdbcType=VARCHAR},
+      </if>
+      <if test="proDesc != null">
+        pro_desc = #{proDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="proContact != null">
+        pro_contact = #{proContact,jdbcType=VARCHAR},
+      </if>
+      <if test="proPhone != null">
+        pro_phone = #{proPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="proAddress != null">
+        pro_address = #{proAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="proFax != null">
+        pro_fax = #{proFax,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        modify_by = #{modifyBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.SmbmsProvider">
+    <!--@mbg.generated-->
+    update smbms_provider
+    set pro_code = #{proCode,jdbcType=VARCHAR},
+      pro_nme = #{proNme,jdbcType=VARCHAR},
+      pro_desc = #{proDesc,jdbcType=VARCHAR},
+      pro_contact = #{proContact,jdbcType=VARCHAR},
+      pro_phone = #{proPhone,jdbcType=VARCHAR},
+      pro_address = #{proAddress,jdbcType=VARCHAR},
+      pro_fax = #{proFax,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

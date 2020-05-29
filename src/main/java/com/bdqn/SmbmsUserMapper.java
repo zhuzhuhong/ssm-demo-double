@@ -28,4 +28,6 @@ public interface SmbmsUserMapper {
      */
     List<CustomUser> selectCostomeUser();
 
+    int insertUser(SmbmsUser user);
+
 }

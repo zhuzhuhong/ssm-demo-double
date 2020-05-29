@@ -3,10 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
@@ -17,24 +20,24 @@
 
     <!--将被引用的实体类纳入到Spring的管理中-->
     <!--<bean id="smbmsRole" class="com.bdqn.SmbmsRole">-->
-        <!--&lt;!&ndash;通过构造注入相关属性&ndash;&gt;-->
-        <!--&lt;!&ndash;<constructor-arg name="roleCode" value="Manager"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<constructor-arg name="roleName" value="经理"/>&ndash;&gt;-->
-        <!--<constructor-arg index="0" value="3" />-->
-        <!--<constructor-arg index="1" value="Admin"/>-->
-        <!--<constructor-arg index="2" value="管理"/>-->
-        <!--&lt;!&ndash;通过set注入相关属性&ndash;&gt;-->
-        <!--&lt;!&ndash;<property name="roleCode" value="Admin"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<property name="roleName" value="管理员"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;通过构造注入相关属性&ndash;&gt;-->
+    <!--&lt;!&ndash;<constructor-arg name="roleCode" value="Manager"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<constructor-arg name="roleName" value="经理"/>&ndash;&gt;-->
+    <!--<constructor-arg index="0" value="3" />-->
+    <!--<constructor-arg index="1" value="Admin"/>-->
+    <!--<constructor-arg index="2" value="管理"/>-->
+    <!--&lt;!&ndash;通过set注入相关属性&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="roleCode" value="Admin"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="roleName" value="管理员"/>&ndash;&gt;-->
 
-        <!--&lt;!&ndash;<constructor-arg name="creationDate" value="new Date(2020-5-21)"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<constructor-arg name="creationDate" value="new Date(2020-5-21)"/>&ndash;&gt;-->
     <!--</bean>-->
 
-<!--将实体类纳入到Spring的管理中-->
+    <!--将实体类纳入到Spring的管理中-->
     <!--<bean id="customerUser" class="com.bdqn.CustomUser">-->
-        <!--&lt;!&ndash;注入 所依赖的值 或实体&ndash;&gt;-->
-        <!--<property name="name" value="ETC"/>-->
-        <!--<property name="smbmsRole" ref="smbmsRole"/>-->
+    <!--&lt;!&ndash;注入 所依赖的值 或实体&ndash;&gt;-->
+    <!--<property name="name" value="ETC"/>-->
+    <!--<property name="smbmsRole" ref="smbmsRole"/>-->
     <!--</bean>-->
 
     <!--将目标方法，也就是需要被增强的方法纳入到Spring的管理中-->
@@ -62,6 +65,8 @@
 
     <!--配置SqlSessionFactory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--引入MyBatis配置文件-->
+        <!--<property name="configLocation" value="classpath:mybatis-config.xml"/>-->
         <!--引入数据库连接池-->
         <property name="dataSource" ref="dataSource"/>
         <!--指定mapper映射文件所在的位置-->
@@ -79,11 +84,33 @@
 
     </bean>
 
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--指定需要事务管理的数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置事务规则-->
+    <tx:advice transaction-manager="txManager" id="txAdvice">
+        <tx:attributes>
+            <!--针对不同的方法，执行不同的事务规则 ，一般会使用通配符-->
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="*" propagation="REQUIRED" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
     <!--开始配置切面 -->
     <aop:config>
         <!--指定切入点，也就是要增强的位置-->
         <!--com.bdqn.service.SmbmsUserService; com.bdqn.service.impl.SmbmsRoleServiceImpl-->
         <aop:pointcut id="pointcut" expression="execution(public * com.bdqn.service..*.*(..))"/>
+        <!--指定事务切入点-->
+        <aop:pointcut id="txPointcut" expression="execution(public * com.bdqn.service..*.*(..))"/>
         <!--指定增强类型-->
         <aop:aspect ref="logAspect">
             <!--前置增强，同时指定前置所调用的方法-->
@@ -96,10 +123,14 @@
             <!--<aop:after method="finallyAdevice" pointcut-ref="pointcut" />-->
             <!--环绕增强，目标方法前后都会执行-->
             <aop:around method="aroudAdevice" pointcut-ref="pointcut"/>
-
         </aop:aspect>
     </aop:config>
 
+    <!--配置事务-->
+    <aop:config>
+        <!--将事务管理器与切入点结合，也就将两者织入-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
 
 
 </beans>

@@ -1,6 +1,7 @@
 package com.bdqn;
 
 import com.bdqn.service.SmbmsUserService;
+import com.bdqn.service.impl.SmbmsRoleServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -21,17 +22,20 @@ import java.util.List;
 public class SmbmsUserServiceTest {
     private SmbmsUserService smbmsUserService = null;
     private static final Logger log = LogManager.getLogger(SmbmsUserServiceTest.class);
+    private SmbmsRoleServiceImpl smbmsRoleService = null;
 
     @Before
     public void before() {
-        smbmsUserService = new ClassPathXmlApplicationContext("applicationContext.xml")
-                .getBean(SmbmsUserService.class);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        smbmsUserService = context.getBean(SmbmsUserService.class);
+        smbmsRoleService = context.getBean(SmbmsRoleServiceImpl.class);
     }
 
     @After
     public void after() {
         //GC
         smbmsUserService = null;
+        smbmsRoleService = null;
     }
 
     @Test
@@ -66,5 +70,16 @@ public class SmbmsUserServiceTest {
         List<SmbmsUser> userList = smbmsUserService.getUserList();
         userList.forEach(smbmsUser -> log.info(smbmsUser));
     }
+
+    @Test
+    public void testTransaction() {
+        SmbmsBill smbmsBill = new SmbmsBill();
+        smbmsBill.setProductName("茶叶");
+        SmbmsProvider provider = new SmbmsProvider();
+        provider.setProNme("默默");
+        smbmsRoleService.addProviderAndBill(smbmsBill,provider);
+    }
+
+
 
 }

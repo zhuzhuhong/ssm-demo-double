@@ -45,4 +45,5 @@
         from smbms_user
                  left join smbms_role on smbms_user.user_role = smbms_role.id
     </select>
+
 </mapper>

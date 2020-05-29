@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.SmbmsBillMapper">
+  <resultMap id="BaseResultMap" type="com.bdqn.SmbmsBill">
+    <!--@mbg.generated-->
+    <!--@Table smbms_bill-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bill_code" jdbcType="VARCHAR" property="billCode" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
+    <result column="product_unit" jdbcType="VARCHAR" property="productUnit" />
+    <result column="product_count" jdbcType="DECIMAL" property="productCount" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="is_payment" jdbcType="INTEGER" property="isPayment" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="modify_by" jdbcType="BIGINT" property="modifyBy" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="provider_id" jdbcType="BIGINT" property="providerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, bill_code, product_name, product_desc, product_unit, product_count, total_price, 
+    is_payment, created_by, creation_date, modify_by, modify_date, provider_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from smbms_bill
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from smbms_bill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bdqn.SmbmsBill" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into smbms_bill (bill_code, product_name, product_desc, 
+      product_unit, product_count, total_price, 
+      is_payment, created_by, creation_date, 
+      modify_by, modify_date, provider_id
+      )
+    values (#{billCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productDesc,jdbcType=VARCHAR}, 
+      #{productUnit,jdbcType=VARCHAR}, #{productCount,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{isPayment,jdbcType=INTEGER}, #{createdBy,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{modifyBy,jdbcType=BIGINT}, #{modifyDate,jdbcType=TIMESTAMP}, #{providerId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.bdqn.SmbmsBill" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into smbms_bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="billCode != null">
+        bill_code,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productDesc != null">
+        product_desc,
+      </if>
+      <if test="productUnit != null">
+        product_unit,
+      </if>
+      <if test="productCount != null">
+        product_count,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="isPayment != null">
+        is_payment,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="modifyBy != null">
+        modify_by,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+      <if test="providerId != null">
+        provider_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="billCode != null">
+        #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null">
+        #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productUnit != null">
+        #{productUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        #{productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPayment != null">
+        #{isPayment,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        #{modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="providerId != null">
+        #{providerId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.SmbmsBill">
+    <!--@mbg.generated-->
+    update smbms_bill
+    <set>
+      <if test="billCode != null">
+        bill_code = #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null">
+        product_desc = #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productUnit != null">
+        product_unit = #{productUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        product_count = #{productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPayment != null">
+        is_payment = #{isPayment,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null">
+        modify_by = #{modifyBy,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null">
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="providerId != null">
+        provider_id = #{providerId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.SmbmsBill">
+    <!--@mbg.generated-->
+    update smbms_bill
+    set bill_code = #{billCode,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_desc = #{productDesc,jdbcType=VARCHAR},
+      product_unit = #{productUnit,jdbcType=VARCHAR},
+      product_count = #{productCount,jdbcType=DECIMAL},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      is_payment = #{isPayment,jdbcType=INTEGER},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=BIGINT},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      provider_id = #{providerId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
